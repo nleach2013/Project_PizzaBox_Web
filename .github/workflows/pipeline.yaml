@@ -12,15 +12,18 @@ jobs:
       - run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput='test_coverage/' --logger=trx -o 'test_result'
 
   analyze:
+    needs:
+      - build
+      - test
     env: 
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - run: dotnet tool install -g dotnet-sonarscanner
-      - run: dotnet sonarscanner begin -k:'pizzabox' -o:'nleach2013' -d.sonar.login='$SONAR_TOKEN' -d.sonar.url:'https://sonarcloud.io' -d.sonar.cs.vstest.reportsPaths
+      - run: dotnet sonarscanner begin -k:'pizzabox' -o:'nleach2013' -d:sonar.login='$SONAR_TOKEN' -d:sonar.url='https://sonarcloud.io' -d:sonar.cs.vstest.reportsPaths
       - run: dotnet build
-      - run: dotnet sonarscanner end -d.sonar.login:'$SONAR_TOKEN'
+      - run: dotnet sonarscanner end -d:sonar.login:'$SONAR_TOKEN'
 
 name: ci-pipeline
 
