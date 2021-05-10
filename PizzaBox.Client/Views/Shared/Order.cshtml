@@ -1,3 +1,49 @@
-@model PizzaBox.Client.Controllers.OrderController
+@model PizzaBox.Client.Models.OrderViewModel
 
-<form action="" method="get"></form>
+<form action="/order" method="post">
+  @Html.AntiForgeryToken()
+
+  <fieldset>
+    <legend>Crusts</legend>
+
+    @Html.ValidationMessageFor(m => m.SelectedCrust)
+
+    @foreach (var item in Model.Crusts)
+    {
+      <div class="form-check">
+        <input class="form-check-input" type="radio" asp-for="SelectedCrust" value="@item">
+        <label class="form-check-label" for="@item">@item</label>
+      </div>
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Sizes</legend>
+
+    @Html.ValidationMessageFor(m => m.SelectedSize)
+
+    @foreach (var item in Model.Sizes)
+    {
+      <div class="form-check">
+        <input class="form-check-input" type="radio" asp-for="SelectedSize" value="@item">
+        <label class="form-check-label" for="@item">@item</label>
+      </div>
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Toppings</legend>
+
+    @Html.ValidationMessageFor(m => m.SelectedToppings)
+
+    @foreach (var item in Model.Toppings)
+    {
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="@item" name="selectedtoppings" value="@item">
+        <label class="form-check-label" for="@item">@item</label>
+      </div>
+    }
+  </fieldset>
+
+  <button type="submit">make pizza</button>
+</form>
