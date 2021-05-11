@@ -52,7 +52,7 @@ jobs:
 
   deploy:
     needs:
-      - package
+      - login
     runs-on: ubuntu-20.04
     steps:
       - uses: azure/webapps-deploy@v2
