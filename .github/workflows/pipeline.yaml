@@ -29,12 +29,15 @@ jobs:
   package:
     needs:
       - analyze
+    env: 
+      DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: docker login
       - run: docker image build -f Dockerfile -t pizzabox .
       - run: docker image tag pizzabox noahleach/pizzabox
+      - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker push noahleach/pizzabox
       - run: docker logout
 
