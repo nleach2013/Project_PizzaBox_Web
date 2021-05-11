@@ -30,7 +30,10 @@ namespace PizzaBox.Client
       services.AddScoped<UnitOfWork>();
       services.AddDbContext<PizzaBoxContext>(options =>
       {
-        options.UseNpgsql(Configuration.GetConnectionString("pgsql"));
+        options.UseSqlServer(Configuration.GetConnectionString("mssql"), opts =>
+        {
+          opts.EnableRetryOnFailure(3);
+        });
       });
     }
 
