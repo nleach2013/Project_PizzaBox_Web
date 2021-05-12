@@ -8,7 +8,6 @@ using PizzaBox.Storage;
 namespace PizzaBox.Client.Controllers
 {
   [Route("[controller]")]
-  [Route("[controller]/order")]
   public class OrderController : Controller
   {
     private readonly UnitOfWork _unitOfWork;
